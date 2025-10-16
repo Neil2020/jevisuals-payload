@@ -68,70 +68,74 @@ const InitialPageLoader: React.FC<InitialPageLoaderProps> = ({
 
   return (
     <div className="fixed inset-0 z-[9999] overflow-hidden">
-      {/* Top half of the video */}
+      {/* Top half - everything above center line */}
       <div
-        className={`absolute inset-0 transition-transform ease-in-out ${
+        className={`absolute inset-0 transition-transform ease-in-out bg-black flex items-center justify-center ${
           isSplitting ? '-translate-y-full' : 'translate-y-0'
         }`}
         style={{
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)',
           transitionDuration: `${splitDuration}ms`,
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)',
         }}
       >
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          src={videoUrl}
-          muted
-          playsInline
-          loop={false}
-          preload="auto"
-          onLoadedData={() => {
-            // Sync video time when loaded
-            if (videoRef2.current) {
-              videoRef.current!.currentTime = videoRef2.current.currentTime
-            }
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center center',
-          }}
-        />
+        <div className="relative border-4 border-white shadow-2xl">
+          <video
+            ref={videoRef}
+            className="object-cover"
+            src={videoUrl}
+            muted
+            playsInline
+            loop={false}
+            preload="auto"
+            onLoadedData={() => {
+              // Sync video time when loaded
+              if (videoRef2.current) {
+                videoRef.current!.currentTime = videoRef2.current.currentTime
+              }
+            }}
+            style={{
+              width: '60vw',
+              height: '50vh',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+            }}
+          />
+        </div>
       </div>
 
-      {/* Bottom half of the video */}
+      {/* Bottom half - everything below center line */}
       <div
-        className={`absolute inset-0 transition-transform ease-in-out ${
+        className={`absolute inset-0 transition-transform ease-in-out bg-black flex items-center justify-center ${
           isSplitting ? 'translate-y-full' : 'translate-y-0'
         }`}
         style={{
-          clipPath: 'polygon(0% 50%, 100% 50%, 100% 100%, 0% 100%)',
           transitionDuration: `${splitDuration}ms`,
+          clipPath: 'polygon(0% 50%, 100% 50%, 100% 100%, 0% 100%)',
         }}
       >
-        <video
-          ref={videoRef2}
-          className="w-full h-full object-cover"
-          src={videoUrl}
-          muted
-          playsInline
-          loop={false}
-          preload="auto"
-          onLoadedData={() => {
-            // Sync video time when loaded
-            if (videoRef.current) {
-              videoRef2.current!.currentTime = videoRef.current.currentTime
-            }
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center center',
-          }}
-        />
+        <div className="relative border-4 border-white shadow-2xl">
+          <video
+            ref={videoRef2}
+            className="object-cover"
+            src={videoUrl}
+            muted
+            playsInline
+            loop={false}
+            preload="auto"
+            onLoadedData={() => {
+              // Sync video time when loaded
+              if (videoRef.current) {
+                videoRef2.current!.currentTime = videoRef.current.currentTime
+              }
+            }}
+            style={{
+              width: '60vw',
+              height: '50vh',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+            }}
+          />
+        </div>
       </div>
 
       {/* Optional loading indicator */}
